@@ -13,7 +13,8 @@ import {
     VoterService,
     LocationValidator,
     EventsListResolver,
-    EventResolver
+    EventResolver,
+    EventSessionResolver
 } from './events/index'
 import {EventsAppComponent} from "./events-app.components";
 import {NavBarComponent} from "./nav/navbar.components";
@@ -63,6 +64,7 @@ declare let jQuery: Object
         EventService,
         EventResolver,
         EventsListResolver,
+        EventSessionResolver,
         VoterService,
         { provide: 'canDeactivateCreateEvent', useValue: checkDirtyState},
         { provide: JQ_TOKEN, useValue: jQuery},
@@ -77,5 +79,5 @@ export class AppModule {
 function checkDirtyState(component: CreateEventComponent) {
     if(component.isDirty)
         return window.confirm('You have not saved this event, do you really want to cancel?')
-    return false
+    return true
 }

@@ -1,6 +1,7 @@
 package com.sowecom.models;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
@@ -16,6 +17,7 @@ public class Event {
     private double price;
     private String imageUrl;
     private String onlineUrl;
+    @DBRef
     private List<Session> sessions;
     private Location location;
 

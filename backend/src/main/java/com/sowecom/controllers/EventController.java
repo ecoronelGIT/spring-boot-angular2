@@ -1,6 +1,7 @@
 package com.sowecom.controllers;
 
 import com.sowecom.dtos.EventDTO;
+import com.sowecom.dtos.SessionDTO;
 import com.sowecom.exceptions.ErrorException;
 import com.sowecom.models.Event;
 import com.sowecom.models.Location;
@@ -17,6 +18,7 @@ import java.io.FileReader;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/event")
 public class EventController {
@@ -24,21 +26,28 @@ public class EventController {
     @Autowired
     private EventService eventService;
 
-    @CrossOrigin
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public List<EventDTO> getEvents() {
-        return eventService.getEvents();
+    public List<EventDTO> findAllEvents() {
+        return eventService.findAllEvents();
     }
 
-    @CrossOrigin
-    @RequestMapping(value = "findById/{id}", method = RequestMethod.GET)
-    public EventDTO getEventById(@PathVariable("id") String id) {
-        return eventService.getEventById(id);
+    @RequestMapping(value = "/findById/{id}", method = RequestMethod.GET)
+    public EventDTO findEventById(@PathVariable("id") String id) {
+        return eventService.findEventById(id);
     }
 
-    @CrossOrigin
-    @RequestMapping(value = "save", method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     public void saveEvent(@RequestBody EventDTO event) {
         eventService.saveEvent(event);
+    }
+
+    @RequestMapping(value = "/sessionByName/{name}", method = RequestMethod.GET)
+    public List<SessionDTO> findSessionByName(@PathVariable("name") String name) {
+        return eventService.findSessionByName(name);
+    }
+
+    @RequestMapping(value = "/findEventBySessionId/{id}", method = RequestMethod.GET)
+    public EventDTO findEventBySessionId(@PathVariable("id") String id) {
+        return eventService.findEventBySessionId(id);
     }
 }

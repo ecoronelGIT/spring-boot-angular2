@@ -7,6 +7,7 @@ import com.sowecom.models.Event;
 import com.sowecom.models.Location;
 import com.sowecom.models.Session;
 import com.sowecom.repositories.EventRespository;
+import com.sowecom.repositories.SessionRespository;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +24,15 @@ public class EventService {
 
     @Autowired
     private EventRespository eventRespository;
+    @Autowired
+    private SessionRespository sessionRespository;
 
-    public List<EventDTO> getEvents() {
+    public List<EventDTO> findAllEvents() {
         //this.setEventsInDAO();
         return EventDTO.getEventsDTO(eventRespository.findAll());
     }
 
-    public EventDTO getEventById(String id) {
+    public EventDTO findEventById(String id) {
         return EventDTO.getEventDTO(eventRespository.findOne(id));
     }
 
@@ -53,6 +56,7 @@ public class EventService {
                 session.setLevel(sessionDTO.getLevel());
                 session.setDetail(sessionDTO.getLevel());
                 session.setVoters(sessionDTO.getVoters());
+                sessionRespository.save(session);
                 sessions.add(session);
             }
         }
@@ -62,6 +66,15 @@ public class EventService {
         location.setCity(eventDTO.getLocation().getCity());
         location.setCountry(eventDTO.getLocation().getCountry());
         eventRespository.save(event);
+    }
+
+    public List<SessionDTO> findSessionByName(String name) {
+        List<SessionDTO> sessions = SessionDTO.getSessionsDTO(sessionRespository.findByNameIgnoreCaseLike(name));
+        return sessions;
+    }
+
+    public EventDTO findEventBySessionId(String id) {
+        return  EventDTO.getEventDTO(eventRespository.findBySessionsId(id));
     }
 
     private void setEventsInDAO() {
@@ -90,6 +103,7 @@ public class EventService {
                 event.setLocation(location);
 
                 List<JSONObject> jsonSessions = (List<JSONObject>) json.get("sessions");
+                eventRespository.save(event);
                 List<Session> sessions = new ArrayList<>(0);
                 for(JSONObject jsonSession : jsonSessions) {
                     Session session = new Session();
@@ -100,10 +114,10 @@ public class EventService {
                     session.setLevel(jsonSession.get("level").toString());
                     session.setDetail(jsonSession.get("detail").toString());
                     session.setVoters((List<String>)jsonSession.get("voters"));
+                    sessionRespository.save(session);
                     sessions.add(session);
                 }
                 event.setSessions(sessions);
-
                 eventRespository.save(event);
             }
         } catch (Exception e) {

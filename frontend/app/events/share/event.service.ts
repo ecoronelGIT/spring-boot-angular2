@@ -26,6 +26,14 @@ export class EventService {
         }).catch(this.handleError)
     }
 
+    getEventBySessionId(id:string):Observable<IEvent> {
+      return this.http.get("http://localhost:8090/event/findEventBySessionId/" + id).map((response: Response) => {
+        let event = <IEvent>response.json()
+        event.date = new Date(event.date)
+        return event
+      }).catch(this.handleError)
+    }
+
     saveEvent(event): Observable<IEvent> {
         event.date = new Date(event.date)
         let headers = new Headers({'Content-Type': 'application/json'})
@@ -41,25 +49,13 @@ export class EventService {
         //EVENTS[index] = event
     }
 
-    searchSessions(searchTerm: string) {
-        let term = searchTerm.toLocaleLowerCase();
-        let results: ISession[] = [];
-
-        /*EVENTS.forEach(event => {
-            let matchingSessions = event.sessions.filter(session =>
-                session.name.toLocaleLowerCase().indexOf(term) > -1)
-            matchingSessions = matchingSessions.map((session:any) => {
-              session.eventId = event.id
-              return session
-            })
-            results = results.concat(matchingSessions)
-        })*/
-
-        let emitter = new EventEmitter(true)
-        setTimeout(() => {
-            emitter.emit(results)
-        }, 100)
-        return emitter
+    searchSessions(searchTerm: string):Observable<ISession[]> {
+      let term = searchTerm.toLocaleLowerCase();
+      return this.http.get("http://localhost:8090/event/sessionByName/" + searchTerm)
+        .map((response: Response) => {
+          let sessions = <ISession[]>response.json()
+          return sessions
+        }).catch(this.handleError)
     }
 
     private handleError(error: Response) {
