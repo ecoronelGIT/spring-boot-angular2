@@ -23,14 +23,14 @@ export class CreateSessionComponent implements OnInit {
     presenter: FormControl
     duration: FormControl
     level: FormControl
-    abstract: FormControl
+    detail: FormControl
 
     ngOnInit() {
         this.name = new FormControl('', Validators.required)
         this.presenter = new FormControl('', Validators.required)
         this.duration = new FormControl('', Validators.required)
         this.level = new FormControl('', Validators.required)
-        this.abstract = new FormControl('', [Validators.required,
+        this.detail = new FormControl('', [Validators.required,
             Validators.maxLength(400), restrictedWords(['foo', 'bar'])])
 
         this.newSessionForm = new FormGroup({
@@ -38,7 +38,7 @@ export class CreateSessionComponent implements OnInit {
             presenter: this.presenter,
             duration: this.duration,
             level: this.level,
-            abstract: this.abstract
+            detail: this.detail
         })
     }
 
@@ -49,7 +49,7 @@ export class CreateSessionComponent implements OnInit {
             presenter: formValues.presenter,
             duration: +formValues.duration,
             level: formValues.level,
-            abstract: formValues.abstract,
+            detail: formValues.detail,
             voters: []
         }
         this.saveNewSession.emit(session)

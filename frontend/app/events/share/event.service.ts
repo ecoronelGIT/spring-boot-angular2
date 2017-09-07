@@ -44,10 +44,15 @@ export class EventService {
             }).catch(this.handleError)
     }
 
-    updateEvent(event) {
-        //let index = EVENTS.findIndex(x => x.id = event.id)
-        //EVENTS[index] = event
-    }
+  updateEvent(id: string, session : ISession): Observable<IEvent> {
+    let headers = new Headers({'Content-Type': 'application/json'})
+    let options = new RequestOptions({headers: headers})
+    session.id = "";
+    return this.http.put("http://localhost:8090/event/update",{id: id, session: JSON.stringify(session)}, options)
+      .map((response: Response) => {
+        return response
+      }).catch(this.handleError)
+  }
 
     searchSessions(searchTerm: string):Observable<ISession[]> {
       let term = searchTerm.toLocaleLowerCase();

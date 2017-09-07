@@ -16,8 +16,8 @@
         <div class="form-group" [ngClass]="{'error': duration.invalid && duration.dirty}">
             <label for="duration">Duration:</label>
             <em *ngIf="duration.invalid && duration.dirty" >Required</em>
-            <select class="form-control">
-                <option formControlName="duration" value="">select duration...</option>
+            <select class="form-control" formControlName="duration">
+                <option value="">select duration...</option>
                 <option value="1">Half Hour</option>
                 <option value="2">1 Hour</option>
                 <option value="3">Half Day</option>
@@ -34,15 +34,15 @@
                 <option value="Advanced">Advanced</option>
             </select>
         </div>
-        <div class="form-group" [ngClass]="{'error': abstract.invalid && abstract.dirty}">
-            <label for="abstract">Abstract:</label>
-            <em *ngIf="abstract.invalid && abstract.dirty && abstract?.errors.required" >Required</em>
-            <em *ngIf="abstract.invalid && abstract.dirty && abstract?.errors.maxLength" >Cannot excedd 400 length</em>
-            <em *ngIf="abstract.invalid && abstract.dirty && abstract?.errors.restrictedWords" >
-                Restricted words found: {{abstract.errors.restrictedWords}}
+        <div class="form-group" [ngClass]="{'error': detail.invalid && detail.dirty}">
+            <label for="detail">Detail:</label>
+            <em *ngIf="detail.invalid && detail.dirty && detail?.errors.required" >Required</em>
+            <em *ngIf="detail.invalid && detail.dirty && detail?.errors.maxLength" >Cannot excedd 400 length</em>
+            <em *ngIf="detail.invalid && detail.dirty && detail?.errors.restrictedWords" >
+                Restricted words found: {{detail.errors.restrictedWords}}
             </em>
-            <textarea formControlName="abstract" id="abstract" rows=3 class="form-control"
-                      placeholder="abstract...">
+            <textarea formControlName="detail" id="detail" rows=3 class="form-control"
+                      placeholder="detail...">
 
             </textarea>
         </div>
