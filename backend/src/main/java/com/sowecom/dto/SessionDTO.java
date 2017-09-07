@@ -1,6 +1,6 @@
-package com.sowecom.dtos;
+package com.sowecom.dto;
 
-import com.sowecom.models.Session;
+import com.sowecom.model.Session;
 
 import java.util.ArrayList;
 import java.util.List;

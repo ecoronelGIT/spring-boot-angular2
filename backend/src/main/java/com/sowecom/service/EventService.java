@@ -1,13 +1,13 @@
-package com.sowecom.servicies;
+package com.sowecom.service;
 
-import com.sowecom.dtos.EventDTO;
-import com.sowecom.dtos.SessionDTO;
-import com.sowecom.exceptions.ErrorException;
-import com.sowecom.models.Event;
-import com.sowecom.models.Location;
-import com.sowecom.models.Session;
-import com.sowecom.repositories.EventRespository;
-import com.sowecom.repositories.SessionRespository;
+import com.sowecom.dto.EventDTO;
+import com.sowecom.dto.SessionDTO;
+import com.sowecom.exception.ErrorException;
+import com.sowecom.model.Event;
+import com.sowecom.model.Location;
+import com.sowecom.model.Session;
+import com.sowecom.repository.EventRespository;
+import com.sowecom.repository.SessionRespository;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +36,21 @@ public class EventService {
         return EventDTO.getEventDTO(eventRespository.findOne(id));
     }
 
-    public void saveEvent(EventDTO eventDTO) {
-        Event event = new Event();
+    private Session getSession(SessionDTO sessionDTO) {
+        Session session = new Session();
+        if((sessionDTO.getId() != null) && !sessionDTO.getId().isEmpty()) {
+            session.setId(sessionDTO.getId());
+        }
+        session.setName(sessionDTO.getName());
+        session.setPresenter(sessionDTO.getPresenter());
+        session.setDuration(sessionDTO.getDuration());
+        session.setLevel(sessionDTO.getLevel());
+        session.setDetail(sessionDTO.getLevel());
+        session.setVoters(sessionDTO.getVoters());
+        return session;
+    }
+
+    private void setEventData(Event event, EventDTO eventDTO){
         event.setName(eventDTO.getName());
         event.setDate(eventDTO.getDate());
         event.setTime(eventDTO.getTime());
@@ -48,15 +61,7 @@ public class EventService {
         List<SessionDTO> sessionDTOS = eventDTO.getSessions();
         if(sessionDTOS != null) {
             for (SessionDTO sessionDTO : sessionDTOS) {
-                Session session = new Session();
-                session.setId(sessionDTO.getId());
-                session.setName(sessionDTO.getName());
-                session.setPresenter(sessionDTO.getPresenter());
-                session.setDuration(sessionDTO.getDuration());
-                session.setLevel(sessionDTO.getLevel());
-                session.setDetail(sessionDTO.getLevel());
-                session.setVoters(sessionDTO.getVoters());
-                sessionRespository.save(session);
+                Session session = getSession(sessionDTO);
                 sessions.add(session);
             }
         }
@@ -65,6 +70,19 @@ public class EventService {
         location.setAddress(eventDTO.getLocation().getAddress());
         location.setCity(eventDTO.getLocation().getCity());
         location.setCountry(eventDTO.getLocation().getCountry());
+    }
+
+    public void updateEvent(String id, SessionDTO sessionDTO) {
+        Event event = eventRespository.findOne(id);
+        Session session = getSession(sessionDTO);
+        sessionRespository.save(session);
+        event.getSessions().add(session);
+        eventRespository.save(event);
+    }
+
+    public void saveEvent(EventDTO eventDTO) {
+        Event event = new Event();
+        this.setEventData(event, eventDTO);
         eventRespository.save(event);
     }
 
@@ -75,6 +93,18 @@ public class EventService {
 
     public EventDTO findEventBySessionId(String id) {
         return  EventDTO.getEventDTO(eventRespository.findBySessionsId(id));
+    }
+
+    public void addVoter(String sessionId, String voterName) {
+        Session session = sessionRespository.findOne(sessionId);
+        session.getVoters().add(voterName);
+        sessionRespository.save(session);
+    }
+
+    public void deleteVoter(String sessionId, String voterName) {
+        Session session = sessionRespository.findOne(sessionId);
+        session.getVoters().remove(voterName);
+        sessionRespository.save(session);
     }
 
     private void setEventsInDAO() {

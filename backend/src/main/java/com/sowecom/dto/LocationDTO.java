@@ -1,6 +1,6 @@
-package com.sowecom.dtos;
+package com.sowecom.dto;
 
-import com.sowecom.models.Location;
+import com.sowecom.model.Location;
 
 public class LocationDTO {
     private String address;

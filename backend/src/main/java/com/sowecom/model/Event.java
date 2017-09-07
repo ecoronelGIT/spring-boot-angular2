@@ -1,12 +1,15 @@
-package com.sowecom.dtos;
+package com.sowecom.model;
 
-import com.sowecom.models.Event;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class EventDTO {
+@Document(collection = "events")
+public class Event {
+    @Id
     private String id;
     private String name;
     private Date date;
@@ -14,30 +17,9 @@ public class EventDTO {
     private double price;
     private String imageUrl;
     private String onlineUrl;
-    private List<SessionDTO> sessions;
-    private LocationDTO location;
-
-    public static List<EventDTO> getEventsDTO(List<Event> events) {
-        List<EventDTO> eventsDTO = new ArrayList<>(0);
-        for(Event event : events) {
-            eventsDTO.add(getEventDTO(event));
-        }
-        return eventsDTO;
-    }
-
-    public static EventDTO getEventDTO(Event event) {
-        EventDTO eventDTO = new EventDTO();
-        eventDTO.setId(event.getId());
-        eventDTO.setName(event.getName());
-        eventDTO.setDate(event.getDate());
-        eventDTO.setTime(event.getTime());
-        eventDTO.setPrice(event.getPrice());
-        eventDTO.setImageUrl(event.getImageUrl());
-        eventDTO.setOnlineUrl(event.getOnlineUrl());
-        eventDTO.setSessions(SessionDTO.getSessionsDTO(event.getSessions()));
-        eventDTO.setLocation(LocationDTO.getLocationDTO(event.getLocation()));
-        return eventDTO;
-    }
+    @DBRef
+    private List<Session> sessions;
+    private Location location;
 
     public String getId() {
         return id;
@@ -95,19 +77,19 @@ public class EventDTO {
         this.onlineUrl = onlineUrl;
     }
 
-    public List<SessionDTO> getSessions() {
+    public List<Session> getSessions() {
         return sessions;
     }
 
-    public void setSessions(List<SessionDTO> sessions) {
+    public void setSessions(List<Session> sessions) {
         this.sessions = sessions;
     }
 
-    public LocationDTO getLocation() {
+    public Location getLocation() {
         return location;
     }
 
-    public void setLocation(LocationDTO location) {
+    public void setLocation(Location location) {
         this.location = location;
     }
 }

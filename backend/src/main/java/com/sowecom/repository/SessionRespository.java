@@ -1,6 +1,6 @@
-package com.sowecom.repositories;
+package com.sowecom.repository;
 
-import com.sowecom.models.Session;
+import com.sowecom.model.Session;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

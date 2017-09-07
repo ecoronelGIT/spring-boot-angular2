@@ -1,15 +1,12 @@
-package com.sowecom.models;
+package com.sowecom.dto;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
+import com.sowecom.model.Event;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Document(collection = "events")
-public class Event {
-    @Id
+public class EventDTO {
     private String id;
     private String name;
     private Date date;
@@ -17,9 +14,30 @@ public class Event {
     private double price;
     private String imageUrl;
     private String onlineUrl;
-    @DBRef
-    private List<Session> sessions;
-    private Location location;
+    private List<SessionDTO> sessions;
+    private LocationDTO location;
+
+    public static List<EventDTO> getEventsDTO(List<Event> events) {
+        List<EventDTO> eventsDTO = new ArrayList<>(0);
+        for(Event event : events) {
+            eventsDTO.add(getEventDTO(event));
+        }
+        return eventsDTO;
+    }
+
+    public static EventDTO getEventDTO(Event event) {
+        EventDTO eventDTO = new EventDTO();
+        eventDTO.setId(event.getId());
+        eventDTO.setName(event.getName());
+        eventDTO.setDate(event.getDate());
+        eventDTO.setTime(event.getTime());
+        eventDTO.setPrice(event.getPrice());
+        eventDTO.setImageUrl(event.getImageUrl());
+        eventDTO.setOnlineUrl(event.getOnlineUrl());
+        eventDTO.setSessions(SessionDTO.getSessionsDTO(event.getSessions()));
+        eventDTO.setLocation(LocationDTO.getLocationDTO(event.getLocation()));
+        return eventDTO;
+    }
 
     public String getId() {
         return id;
@@ -77,19 +95,19 @@ public class Event {
         this.onlineUrl = onlineUrl;
     }
 
-    public List<Session> getSessions() {
+    public List<SessionDTO> getSessions() {
         return sessions;
     }
 
-    public void setSessions(List<Session> sessions) {
+    public void setSessions(List<SessionDTO> sessions) {
         this.sessions = sessions;
     }
 
-    public Location getLocation() {
+    public LocationDTO getLocation() {
         return location;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(LocationDTO location) {
         this.location = location;
     }
 }
