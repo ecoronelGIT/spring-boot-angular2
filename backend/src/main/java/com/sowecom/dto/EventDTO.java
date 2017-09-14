@@ -2,11 +2,13 @@ package com.sowecom.dto;
 
 import com.sowecom.model.Event;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class EventDTO {
+public class EventDTO implements Serializable {
+
     private String id;
     private String name;
     private Date date;

@@ -1,7 +1,7 @@
 package com.sowecom.security.controller;
 
-import com.sowecom.security.JwtTokenUtil;
-import com.sowecom.security.JwtUser;
+import com.sowecom.security.component.TokenUtil;
+import com.sowecom.security.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,22 +12,23 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
+@RequestMapping("/user")
 public class UserRestController {
 
     @Value("${jwt.header}")
     private String tokenHeader;
 
     @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+    private TokenUtil tokenUtil;
 
     @Autowired
     private UserDetailsService userDetailsService;
 
-    @RequestMapping(value = "user", method = RequestMethod.GET)
-    public JwtUser getAuthenticatedUser(HttpServletRequest request) {
+    @RequestMapping(value = "/current", method = RequestMethod.GET)
+    public UserDTO getAuthenticatedUser(HttpServletRequest request) {
         String token = request.getHeader(tokenHeader).substring(7);
-        String username = jwtTokenUtil.getUsernameFromToken(token);
-        JwtUser user = (JwtUser) userDetailsService.loadUserByUsername(username);
+        String username = tokenUtil.getUsernameFromToken(token);
+        UserDTO user = (UserDTO) userDetailsService.loadUserByUsername(username);
         return user;
     }
 

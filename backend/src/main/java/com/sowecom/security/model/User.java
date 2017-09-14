@@ -1,6 +1,7 @@
 package com.sowecom.security.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
@@ -15,10 +16,6 @@ public class User {
 
     @Id
     private String id;
-    //@Column(name = "USERNAME", length = 50, unique = true)
-    @NotNull
-    @Size(min = 4, max = 50)
-    private String username;
     @NotNull
     @Size(min = 4, max = 100)
     private String password;
@@ -30,18 +27,14 @@ public class User {
     private String lastname;
     @NotNull
     @Size(min = 4, max = 50)
-    private String email;
+    private String username;
     @NotNull
     private Boolean enabled;
     @NotNull
     private Date lastPasswordResetDate;
 
-    /*@ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "USER_AUTHORITY",
-            joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
-            inverseJoinColumns = {@JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID")})
-    private List<Authority> authorities;*/
+    @DBRef
+    private List<Authority> authorities;
 
     public String getId() {
         return id;
@@ -49,14 +42,6 @@ public class User {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPassword() {
@@ -83,12 +68,12 @@ public class User {
         this.lastname = lastname;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String email) {
+        this.username = email;
     }
 
     public Boolean getEnabled() {
@@ -100,12 +85,12 @@ public class User {
     }
 
     public List<Authority> getAuthorities() {
-        return new ArrayList<>(0);
+        return authorities;
     }
 
-    //public void setAuthorities(List<Authority> authorities) {
-    //    this.authorities = authorities;
-    //}
+    public void setAuthorities(List<Authority> authorities) {
+        this.authorities = authorities;
+    }
 
     public Date getLastPasswordResetDate() {
         return lastPasswordResetDate;

@@ -1,5 +1,7 @@
 package com.sowecom.security;
 
+
+import com.sowecom.security.component.AuthenticationEntryPointImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +24,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private JwtAuthenticationEntryPoint unauthorizedHandler;
+    private AuthenticationEntryPointImpl unauthorizedHandler;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -40,8 +42,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public JwtAuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
-        return new JwtAuthenticationTokenFilter();
+    public AuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
+        return new AuthenticationTokenFilter();
     }
 
     @Override
@@ -68,7 +70,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js"
                 ).permitAll()
-                .antMatchers("/auth/**").permitAll()
+                .antMatchers("/auth/**", "/event/**").permitAll()
                 .anyRequest().authenticated();
 
         // Custom JWT based security filter
@@ -78,4 +80,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // disable page caching
         httpSecurity.headers().cacheControl();
     }
+
+    /**
+     *  protected void configure(HttpSecurity http) throws Exception {
+     http
+     .csrf().disable()
+     .cors().and()
+     .authorizeRequests()
+     .antMatchers("/**", "/event/**").permitAll()
+     .anyRequest().authenticated()
+     .and()
+     .formLogin()
+     .loginPage("/login")
+     .permitAll()
+     .and()
+     .logout()
+     .permitAll();
+     }
+
+     */
 }
