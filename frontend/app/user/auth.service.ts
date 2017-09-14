@@ -1,11 +1,12 @@
 import {Injectable} from "@angular/core";
-import {IUser} from "./user.model";
+import {IAuthenticationRequest, IUser} from "./user.model";
 import {Headers, Http, RequestOptions} from "@angular/http";
 import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class AuthService {
     currentUser: IUser
+    currentToken: string
 
   constructor(private http: Http) { }
 
@@ -17,11 +18,12 @@ export class AuthService {
 
       let headers = new Headers({'Content-Type': 'application/json'})
       let options = new RequestOptions({headers: headers})
-      let loginInfo = {username: userName, password: password}
+      let authenticationRequest:IAuthenticationRequest = {username: userName, password: password}
 
-      return this.http.post('http://localhost:8090/login', JSON.stringify({loginInfo}), options).do( resp => {
+      return this.http.post('http://localhost:8090/auth/login', JSON.stringify(authenticationRequest), options).do( resp => {
         if(resp) {
-            this.currentUser = <IUser> resp.json().user
+          this.currentUser = <IUser> resp.json().user
+          this.currentToken = resp.json().token
         }
       }).catch(error => {
           return Observable.of(false)
