@@ -1,12 +1,12 @@
-import {Component, EventEmitter, OnInit, Output} from "@angular/core";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {ISession} from "../share/index";
-import {restrictedWords} from "../share/restricted-words.validator";
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {ISession} from '../share/index';
+import {restrictedWords} from '../share/restricted-words.validator';
 
 @Component({
     selector: 'create-session',
     templateUrl: 'app/events/event-details/create-session.component.html',
-    styles:[`
+    styles: [`
         em {float: right; color: #E05C65; padding-left: 10px;}
         .error input, .error select, .error textarea {background-color: #E3C3C5;}
         .error ::-webkit-input-placeholder { color: #999;}
@@ -16,22 +16,22 @@ import {restrictedWords} from "../share/restricted-words.validator";
     `]
 })
 export class CreateSessionComponent implements OnInit {
-    @Output() saveNewSession = new EventEmitter()
-    @Output() cancelAddSession = new EventEmitter()
-    newSessionForm: FormGroup
-    name: FormControl
-    presenter: FormControl
-    duration: FormControl
-    level: FormControl
-    detail: FormControl
+    @Output() saveNewSession = new EventEmitter();
+    @Output() cancelAddSession = new EventEmitter();
+    newSessionForm: FormGroup;
+    name: FormControl;
+    presenter: FormControl;
+    duration: FormControl;
+    level: FormControl;
+    detail: FormControl;
 
     ngOnInit() {
-        this.name = new FormControl('', Validators.required)
-        this.presenter = new FormControl('', Validators.required)
-        this.duration = new FormControl('', Validators.required)
-        this.level = new FormControl('', Validators.required)
+        this.name = new FormControl('', Validators.required);
+        this.presenter = new FormControl('', Validators.required);
+        this.duration = new FormControl('', Validators.required);
+        this.level = new FormControl('', Validators.required);
         this.detail = new FormControl('', [Validators.required,
-            Validators.maxLength(400), restrictedWords(['foo', 'bar'])])
+            Validators.maxLength(400), restrictedWords(['foo', 'bar'])]);
 
         this.newSessionForm = new FormGroup({
             name : this.name,
@@ -39,7 +39,7 @@ export class CreateSessionComponent implements OnInit {
             duration: this.duration,
             level: this.level,
             detail: this.detail
-        })
+        });
     }
 
     saveSession(formValues) {
@@ -51,11 +51,11 @@ export class CreateSessionComponent implements OnInit {
             level: formValues.level,
             detail: formValues.detail,
             voters: []
-        }
-        this.saveNewSession.emit(session)
+        };
+        this.saveNewSession.emit(session);
     }
 
     cancel() {
-        this.cancelAddSession.emit()
+        this.cancelAddSession.emit();
     }
 }

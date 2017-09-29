@@ -1,10 +1,10 @@
-import {Component, OnInit} from "@angular/core";
-import {Router} from "@angular/router";
-import {EventService} from "./share/index";
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {EventService} from './share/index';
 
 @Component({
-    templateUrl:'app/events/crate-event.components.html',
-    styles:[`
+    templateUrl: 'app/events/crate-event.components.html',
+    styles: [`
         em {float: right; color: #E05C65; padding-left: 10px;}
         .error input {background-color: #E3C3C5;}
         .error ::-webkit-input-placeholder { color: #999;}
@@ -15,12 +15,10 @@ import {EventService} from "./share/index";
 
 })
 export class CreateEventComponent implements OnInit {
-    isDirty:Boolean = true
-    event: any = {location: {}}
+    isDirty: Boolean = true;
+    event: any = {location: {}};
 
-    constructor(private router: Router, private eventService: EventService) {
-
-    }
+    constructor(private router: Router, private eventService: EventService) { }
 
     ngOnInit() {
         /*this.event = {
@@ -40,12 +38,12 @@ export class CreateEventComponent implements OnInit {
 
     saveEvent(formValues) {
         this.eventService.saveEvent(formValues).subscribe(response => {
-            this.isDirty = false
-            this.router.navigateByUrl('/events')
-        })
+            this.isDirty = false;
+            this.router.navigateByUrl('/events');
+        });
     }
 
     cancel() {
-        this.router.navigateByUrl('/events')
+        this.router.navigateByUrl('/events');
     }
 }
