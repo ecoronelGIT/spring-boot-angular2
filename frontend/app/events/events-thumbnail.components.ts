@@ -2,9 +2,10 @@ import {Component, Input} from "@angular/core";
 import {IEvent} from "./share/event.model";
 
 @Component({
-    selector: 'event-thumbnail',
-    templateUrl: 'app/events/events-thumbnail.components.html',
-    styles:[`
+  selector: 'event-thumbnail',
+  moduleId: module.id,
+  templateUrl: 'events-thumbnail.components.html',
+  styles:[`
         .well div {color: #bbb;}
         .thumbnail {min-height: 210px;}
         .green{color: #003300 !important;}

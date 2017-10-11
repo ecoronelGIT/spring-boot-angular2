@@ -1,3 +1,4 @@
+import './rxjs-extensions';
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {EventsAppComponent} from './events-app.components';
@@ -33,7 +34,7 @@ import {ToasterModule} from 'angular2-toaster';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpModule} from '@angular/http';
 
-declare let jQuery: Object;
+let jQuery: Object = window['$'];
 
 @NgModule({
     imports: [
@@ -78,7 +79,7 @@ export class AppModule {
 
 }
 
-function checkDirtyState(component: CreateEventComponent) {
+export function checkDirtyState(component: CreateEventComponent) {
     if (component.isDirty) {
         return window.confirm('You have not saved this event, do you really want to cancel?');
     }

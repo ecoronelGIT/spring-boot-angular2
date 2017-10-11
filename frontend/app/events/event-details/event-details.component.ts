@@ -4,12 +4,13 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {IEvent, ISession} from '../share/event.model';
 
 @Component({
-    templateUrl: 'app/events/event-details/event-details.component.html',
-    styles : [`
-        .container {padding-left: 20px; padding-right: 20px;}
-        .event-image {height: 100px}
-        a {cursor: pointer;}
-    `]
+  moduleId: module.id,
+  templateUrl: 'event-details.component.html',
+  styles : [`
+    .container {padding-left: 20px; padding-right: 20px;}
+    .event-image {height: 100px}
+    a {cursor: pointer;}
+`]
 })
 export class EventDetailsComponent implements OnInit {
     event: IEvent;

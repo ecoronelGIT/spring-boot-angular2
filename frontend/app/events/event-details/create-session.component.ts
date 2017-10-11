@@ -4,16 +4,17 @@ import {ISession} from '../share/index';
 import {restrictedWords} from '../share/restricted-words.validator';
 
 @Component({
-    selector: 'create-session',
-    templateUrl: 'app/events/event-details/create-session.component.html',
-    styles: [`
-        em {float: right; color: #E05C65; padding-left: 10px;}
-        .error input, .error select, .error textarea {background-color: #E3C3C5;}
-        .error ::-webkit-input-placeholder { color: #999;}
-        .error ::-moz-placeholder { color: #999}
-        .error :-moz-placeholder { color: #999}
-        .error :ms-input-placeholder {color: #999}
-    `]
+  selector: 'create-session',
+  moduleId: module.id,
+  templateUrl: 'create-session.component.html',
+  styles: [`
+    em {float: right; color: #E05C65; padding-left: 10px;}
+    .error input, .error select, .error textarea {background-color: #E3C3C5;}
+    .error ::-webkit-input-placeholder { color: #999;}
+    .error ::-moz-placeholder { color: #999}
+    .error :-moz-placeholder { color: #999}
+    .error :ms-input-placeholder {color: #999}
+  `]
 })
 export class CreateSessionComponent implements OnInit {
     @Output() saveNewSession = new EventEmitter();
