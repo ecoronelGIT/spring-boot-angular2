@@ -28,7 +28,6 @@ public class EventService {
     private SessionRespository sessionRespository;
 
     public List<EventDTO> findAllEvents() {
-        //this.setEventsInDAO();
         return EventDTO.getEventsDTO(eventRespository.findAll());
     }
 
@@ -107,7 +106,7 @@ public class EventService {
         sessionRespository.save(session);
     }
 
-    private void setEventsInDAO() {
+    public List<JSONObject> setEventsInDAO() {
         JSONParser parser = new JSONParser();
         try {
             ClassLoader classLoader = getClass().getClassLoader();
@@ -150,6 +149,7 @@ public class EventService {
                 event.setSessions(sessions);
                 eventRespository.save(event);
             }
+            return events;
         } catch (Exception e) {
             e.printStackTrace();
             throw new ErrorException();

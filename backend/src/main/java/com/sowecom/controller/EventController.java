@@ -66,5 +66,7 @@ public class EventController {
         eventService.deleteVoter(sessionId, voterName);
     }
 
+    @RequestMapping(value = "/loadEvents", method = RequestMethod.GET)
+    public List<JSONObject> loadEvents() { return eventService.setEventsInDAO(); }
 
 }
