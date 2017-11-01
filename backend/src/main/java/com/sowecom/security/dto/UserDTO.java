@@ -16,14 +16,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class UserDTO implements UserDetails {
 
-    private final String id;
-    private final String username;
-    private final String firstname;
-    private final String lastname;
-    private final String password;
-    private final Collection<? extends GrantedAuthority> authorities;
-    private final boolean enabled;
-    private final Date lastPasswordResetDate;
+    private String id;
+    private String username;
+    private String firstname;
+    private String lastname;
+    private String password;
+    private Collection<? extends GrantedAuthority> authorities;
+    private boolean enabled;
+    private Date lastPasswordResetDate;
+
+    public UserDTO() {}
 
     public UserDTO(String id, String username, String firstname, String lastname,
           String password, Collection<? extends GrantedAuthority> authorities,
