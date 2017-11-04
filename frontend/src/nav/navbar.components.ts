@@ -5,7 +5,6 @@ import {EventService} from '../events/share/event.service';
 
 @Component({
   selector: 'nav-bar',
-  moduleId: module.id,
   templateUrl: 'navbar.components.html',
   styleUrls: ['navbar.components.css']
 })
@@ -17,7 +16,7 @@ export class NavBarComponent {
 
     }
 
-    searchSessions(searchTerm) {
+    searchSessions(searchTerm: string) {
         this.eventService.searchSessions(searchTerm).subscribe((sessions) => {
             this.foundSessions = sessions;
         });

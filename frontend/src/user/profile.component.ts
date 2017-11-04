@@ -5,8 +5,7 @@ import {Router} from '@angular/router';
 import {ToasterService} from 'angular2-toaster';
 
 @Component({
-  moduleId: module.id,
-  templateUrl: 'app/user/profile.component.html',
+  templateUrl: 'profile.component.html',
   styles: [`
     em {float: right; color: #E05C65; padding-left: 10px;}
     .error input {background-color: #E3C3C5;}|
@@ -36,7 +35,7 @@ export class ProfileComponent implements OnInit {
         });
     }
 
-    saveProfile(formValues) {
+    saveProfile(formValues: any) {
         if (this.profileForm.valid) {
             this.authService.updateCurrentUser(formValues.firstName, formValues.lastName)
               .subscribe( () => {

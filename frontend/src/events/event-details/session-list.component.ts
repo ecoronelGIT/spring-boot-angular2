@@ -5,7 +5,6 @@ import {VoterService} from './voter.service';
 
 @Component({
   selector: 'session-list',
-  moduleId: module.id,
   templateUrl: 'session-list.component.html'
 })
 export class SessionListComponent implements OnChanges {
@@ -26,7 +25,7 @@ export class SessionListComponent implements OnChanges {
         }
     }
 
-    filterSessions(filter) {
+    filterSessions(filter: any) {
         if (filter === 'all') {
             this.visibleSessions = this.sessions.slice(0);
         } else {

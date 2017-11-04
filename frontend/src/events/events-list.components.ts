@@ -3,7 +3,6 @@ import {ActivatedRoute} from '@angular/router';
 import {IEvent} from './share/event.model';
 
 @Component({
-  moduleId: module.id,
   templateUrl: 'events-list.components.html'
 })
 export class EventsListComponent implements OnInit {

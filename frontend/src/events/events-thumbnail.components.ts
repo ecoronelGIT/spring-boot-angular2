@@ -3,14 +3,8 @@ import {IEvent} from "./share/event.model";
 
 @Component({
   selector: 'event-thumbnail',
-  moduleId: module.id,
   templateUrl: 'events-thumbnail.components.html',
-  styles:[`
-        .well div {color: #bbb;}
-        .thumbnail {min-height: 210px;}
-        .green{color: #003300 !important;}
-        .bold{font-weight: bold;}
-    `]
+  styleUrls:['events-thumbnail.components.css']
 })
 export class EventThumbnailComponent {
     @Input() event:IEvent
