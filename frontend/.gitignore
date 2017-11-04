@@ -1,7 +1,7 @@
 *.log
 /node_modules/
-/app/*.js
-/app/*.js.map
-/app/**/*.js
-/app/**/*.js.map
+/src/*.js
+/src/*.js.map
+/src/**/*.js
+/src/**/*.js.map
 *.iml
