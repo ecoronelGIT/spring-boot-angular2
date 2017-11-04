@@ -34,7 +34,7 @@ export class EventService {
     }).catch(this.handleError);
   }
 
-  saveEvent(event): Observable<IEvent> {
+  saveEvent(event: IEvent): Observable<IEvent> {
     event.date = new Date(event.date);
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: headers});

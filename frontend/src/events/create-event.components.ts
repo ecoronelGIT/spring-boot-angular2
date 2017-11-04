@@ -3,17 +3,8 @@ import {Router} from '@angular/router';
 import {EventService} from './share/index';
 
 @Component({
-    moduleId: module.id,
     templateUrl: 'crate-event.components.html',
-    styles: [`
-        em {float: right; color: #E05C65; padding-left: 10px;}
-        .error input {background-color: #E3C3C5;}
-        .error ::-webkit-input-placeholder { color: #999;}
-        .error ::-moz-placeholder { color: #999}
-        .error :-moz-placeholder { color: #999}
-        .error :ms-input-placeholder {color: #999}
-    `]
-
+    styleUrls: [ 'create-event.components.css']
 })
 export class CreateEventComponent implements OnInit {
     isDirty: Boolean = true;
@@ -37,7 +28,7 @@ export class CreateEventComponent implements OnInit {
         }*/
     }
 
-    saveEvent(formValues) {
+    saveEvent(formValues: any) {
         this.eventService.saveEvent(formValues).subscribe(response => {
             this.isDirty = false;
             this.router.navigateByUrl('/events');

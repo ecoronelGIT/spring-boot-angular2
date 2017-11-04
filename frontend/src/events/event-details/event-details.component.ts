@@ -4,7 +4,6 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {IEvent, ISession} from '../share/event.model';
 
 @Component({
-  moduleId: module.id,
   templateUrl: 'event-details.component.html',
   styles : [`
     .container {padding-left: 20px; padding-right: 20px;}

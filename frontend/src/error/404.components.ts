@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-    template: `
-        <h1 class="errorMessage">404'd</h1>
-    `,
+    templateUrl: '404.components.html',
     styles: [`
         .errorMessage {
             margin-top:150px;
